@@ -117,6 +117,10 @@ Markdown是兼容HTML语法的，如果只是写仅用来呈现的文本的话�
 
 ```markdown
 [阿里][2]与[企鹅][3]撕逼，[度娘][4]或成最大输家。
+
+[2]:http://www.tmall.com/
+[3]:http://www.zhihu.com/question/27141247
+[4]:http://www.zhihu.com/question/27794207
 ```
 
 它看起来是这样的：

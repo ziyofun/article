@@ -12,7 +12,7 @@ MVC细究来说算是软件工程的“流毒”，软件开发一般项目大�
 ##MVC框架
 MVC框架顾名思义就是能够实现MVC模式的框架了，在前端谈起客户端的MVC框架就不得不提Backbone.js。
 Backbone.js号称是客户端MVC框架的开山鼻祖，Backbone.js之父Jeremy Ashkenas同时也是CoffeeScript的开发者，CoffeeScript这个名字就知道屌屌的。但是Backbone.js经常被戏称为“上古时期的框架”，用他的话说就是“这东西应该呆在博物馆里”。
-![哈里森·琼斯](http://lscs.m.joyme.com/images/lscs/thumb/4/43/%E5%93%88%E9%87%8C%E6%A3%AE%E7%90%BC%E6%96%AF.jpg/260px-%E5%93%88%E9%87%8C%E6%A3%AE%E7%90%BC%E6%96%AF.jpg)
+![哈里森·琼斯](http://db.18183.com/themes/lscs/images/kp/halisenqiongsi.jpg)
 
 但是，But，Backbone.js在github上的赞数可是Angular.js的10倍，难道github的人都已经愚昧落后到这个地步了？当然不是，虽然现在的开发者言必称Angular.js的强大，但是“windows用户会付出代价的”——这是一些Linux用户经常挂在嘴边的话，言下之意为windows用户沉溺于图形界面会失去探索和操控电脑的乐趣，虽然我并不这样认为。而Angular.js就相当于windows，简直菜鸟福利，威力大，操作简单，其功能相比backbone.js强大太多了，数据绑定、依赖注入、各种指令，如果你使用Angular.js来开发WebApp，那么过程中不会有任何恶心呕吐等不适。而Backbone.js就是Linux了，大神专属，走位灵活，追求连击，它需要配置很多的东西，而且有时候Level达不到往往一团糟的页面用了Backbone.js之后变成了一大团糟。
 

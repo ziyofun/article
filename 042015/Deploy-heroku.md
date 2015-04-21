@@ -96,7 +96,7 @@ $ heroku config:set MONGO_PASS = XXXXX
 
 [1]:https://signup.heroku.com/
 [2]:https://dashboard.heroku.com/apps
-[3]:imgs/apps.PNG
+[3]:/imgs/apps.PNG
 [4]:https://s3.amazonaws.com/assets.heroku.com/heroku-toolbelt/heroku-toolbelt.exe
-[5]:imgs/mongolab.PNG
-[6]:imgs/newdb.PNG
+[5]:/imgs/mongolab.PNG
+[6]:/imgs/newdb.PNG

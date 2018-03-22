@@ -7,6 +7,7 @@
 3. [部署Node.js应用至Heroku][3]
 4. [计算属性][4]
 5. [善于利用‘冗余’空间][5]
+6. [循环依赖][6]
 
 
 
@@ -15,3 +16,4 @@
 [3]:/042015/Deploy-heroku.md
 [4]:/052015/computedProperties.md
 [5]:/022018/spacevspeed.md
+[6]:/032018/requireInLoop.md

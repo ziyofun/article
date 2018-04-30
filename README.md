@@ -8,6 +8,7 @@
 4. [计算属性][4]
 5. [善于利用‘冗余’空间][5]
 6. [循环依赖][6]
+7. [Javascript中的异步][7]
 
 
 
@@ -17,3 +18,4 @@
 [4]:/052015/computedProperties.md
 [5]:/022018/spacevspeed.md
 [6]:/032018/requireInLoop.md
+[7]:/032018/async.md

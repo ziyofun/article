@@ -253,7 +253,65 @@ As with anything else, whether or not microservice architecture is right for you
 *. The developers can make use of the latest technologies
 *. The code is organized around business capabilities
 *. Starts the web container more quickly, so the deployment is also faster
-*. When change is required in a certain part of the application, only the related service can be modified and *. *. *. redeployed—no need to modify and redeploy the entire application
+*. When change is required in a certain part of the application, only the related service can be modified and redeployed—no need to modify and redeploy the entire application
 *. Better fault isolation: if one microservice fails, the other will continue to work (although one problematic area of a monolith application can jeopardize the entire system)
 *. Easy to scale and integrate with third-party services
 *. No long-term commitment to technology stack
+
+### 优势
+
+*. 微服务给予开发者单独开发和部署服务的自由
+*. 微服务也适合小团队开发
+*. 不同服务的代码可以使用不同的语言实现（虽然很多人并不鼓励这么做）
+*. 很容易进行集成和自动化部署（使用开源持续集成工具如 Jenkins、Hudson等）
+*. 对于开发者容易理解和修改，可以使团队新人更快融入工作
+*. 开发者可以使用最新的技术栈 
+*. 代码围绕业务容量进行组织
+*. 当应用的某一部分需要修改或部署变动时不会影响整个应用
+*. 更好的错误隔离：如果某个微服务调用失败，其他部分也会正常工作
+*. 服务更容易伸缩和集成第三方服务
+*. 不再需要对技术栈做出长期保证
+
+### Cons
+
+*. Due to distributed deployment, testing can become complicated and tedious
+*. Increasing number of services can result in information barriers
+*. The architecture brings additional complexity as the developers have to mitigate fault tolerance, network latency, and deal with a variety of message formats as well as load balancing
+*. Being a distributed system, it can result in duplication of effort
+*. When number of services increases, integration and managing whole products can become complicated
+*. In addition to several complexities of monolithic architecture, the developers have to deal with the additional complexity of a distributed system
+*. Developers have to put additional effort into implementing the mechanism of communication between the services
+*. Handling use cases that span more than one service without using distributed transactions is not only tough but also requires communication and cooperation between different teams
+*. The architecture usually results in increased memory consumption
+*. Partitioning the application into microservices is very much an art
+
+### 劣势
+
+*. 由于分布式部署的关系，测试会变得更加复杂臃肿
+*. 快速增长的服务可能导致信息屏障
+*. 由于不得不考虑到容错、潜在的网络因素、各种信息处理以及负载均衡等问题，这种架构会带来更多的复杂性
+*. 分布式系统本身就需要多倍的额外精力
+*. 当服务越来越多时，如何集成、管理整个项目会变得更加复杂
+*. 除了整体式架构的复杂性外，开发者还必须处理分布式系统带来的复杂性
+*. 开发者必须为实现服务间的通信机制付出额外精力
+*. 处理跨服务的使用案例时不仅需要分布式的处理方案，还需要多个部门间的交流合作
+*. 这种架构通常会带来更多的存储消耗
+*. 如何将一个应用集成进微服务又是一门艺术
+
+## The Future of Microservice Architecture
+
+Whether or not microservice architecture becomes the preferred style of developers in future, it’s clearly a potent idea that offers serious benefits for designing and implementing enterprise applications.  Many developers and organizations, without ever using the name or even labeling their practice as SOA, have been using an approach toward leveraging APIs that could be classified as microservices.
+
+无论微服务是否能够在未来成为更受开发者欢迎的模式，它清晰有效的思想都会为企业级应用开发提供明显益处。很多未尝试过SOA或者类似于SOA的开发者和组织，正在积极尝试将他们的应用向微服务转移。
+
+We’ve also seen a number of existing technologies try to address parts of the segmentation and communication problems that microservices aim to resolve.  SOAP does well at describing the operations available on a given endpoint and where to discover it via WSDLs.  UDDI is theoretically a good step toward advertising what a service can do and where it can be found.  But these technologies have been compromised by a relatively complex implementation, and tend not to be adopted in newer projects.  REST-based services face the same issues, and although you can use WSDLs with REST, it is not widely done.
+
+我们也看到许多现有技术都试图解决微服务旨在解决的部分细分和通信问题。 SOAP能够很好地描述并通过 WSDL 定位给定终端上的可用操作。从理论上讲，UDDI也是一个很好的方案。但是其实施起来过于复杂，往往不会被新项目采用。基于REST的服务面临同样的问题，尽管你可以使用带有REST的WSDL，但它并没有被广泛使用。
+
+Assuming discovery is a solved problem, sharing schema and meaning across unrelated applications still remains a difficult proposition for anything other than microservices and other SOA systems.  Technologies such as RDFS, OWL, and RIF exist and are standardized, but are not commonly used.  JSON-LD and Schema.org offer a glimpse of what an entire open web that shares definitions looks like, but these aren’t yet adopted in large private enterprises. 
+
+假设设备发现是一个已解决的问题，那么跨应用程序共享模式和含义仍然是除了微服务和其他SOA系统之外系统的难题。虽然有RDFS、OWL和RIF等标准化的技术存在，但并不常用。JSON-LD 和 Schema.org 提供了对共享定义的整个开放web的轮廓，但大型私营企业尚未采用这些定义。
+
+The power of shared, standardized definitions are making inroads within government, though.  Tim Berners Lee has been widely advocating Linked Data.  The results are visible through in data.gov and data.gov.uk, and you can explore the large number of data sets available as well-described linked data here.  If a large number of standardized definitions can be agreed upon, the next steps are most likely toward agents: small programs that orchestrate microservices from a large number of vendors to achieve certain goals.  When you add the increasing complexity and communication requirements of SaaS apps, wearables, and the Internet of Things into the overall picture, it’s clear that microservice architecture probably has a very bright future ahead.
+
+然而，共享的、标准化定义的力量正在政府内部取得进展。蒂姆•伯纳斯•李(Tim Berners Lee)一直在广泛倡导关联数据。结果可以在data.gov和data.gov.uk中看到，您可以在这里浏览大量可用的数据集作为描述良好的关联数据。如果大量的标准化定义可以商定，那么接下来的步骤很可能是针对代理:小型的程序，它编排了来自大量供应商的微服务，以实现特定的目标。当在整体网络图景中考虑到SaaS应用、可穿戴设备和物联网等等复杂性和通信需求时，很明显，微服务体系结构的前景非常光明。

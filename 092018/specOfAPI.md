@@ -10,11 +10,13 @@
 1.软件系统不同组成部分交互的约定
 2.是资源及操作的抽象
 
+API的实现方式千差万别，特别是在语法机器灵活的Js中，但是评价API优良与否是有跨语言的一致性标准，语法清晰，简单明了，逻辑严谨，我们先从实现一套API最基础的要求，组织风格说起
+
 ### REST style
 
  什么是REST？REST(Representational State Transfer)
  
- 0. 由Roy Thomas Fielding（HTTP规范的设计者）于提出
+ 0. 由Roy Thomas Fielding（HTTP规范的设计者）提出
  1. “表征状态转移”
  2. 是一种以资源为中心的API组织风格。
  
@@ -50,7 +52,7 @@
  2. 域名：应该尽量将API部署在专用域名之下
  3. 路径：使用资源名称+动名词的格式, 如：
  
-    > 单一资源: /devices/:sn, /users/:user_id 
+    > 单一资源:  /devices/:sn, /users/:user_id
     
     > 资源列表: /devices, /users
 

@@ -1,5 +1,6 @@
 # 异步编程 —— 从callback到async
 ----------
+
 Node.js以异步编程为IO密集型场景交出了一份令人眼前一亮的方案，但是本身还是有很多不足之处，而异步编程模式就是其中之一。早期的Node.js异步使用高阶函数callback的方式来满足异步回调，实际上是订阅了一个状态，当轮询时检查到状态已被满足则触发这个callback，这是最原始的方式。好处是，算了，其实没什么好处，只是当时除了高阶函数也没有更好的办法了，坏处就可有的说，比如深恶痛觉的callback hell：
 ```javascript
 doFirst(thing1, () => {
@@ -44,3 +45,4 @@ async function doSimeThings() {
     const resultOfThing3 = await doFirst(thing3);
 }
 ```
+

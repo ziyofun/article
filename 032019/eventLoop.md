@@ -223,3 +223,123 @@ setImmediate()相对于setTimeout()的一个主要优势是在一个包括I/O的
 
     bar = 1;
 ```
+
+还有一个实际的例子:
+
+```javascript
+    const server = net.createServer(() => {}).listen(8080);
+
+    server.on('listening', () => {});
+```
+
+当参数仅为端口时，回调函数会被立即执行，而这时 .on('listening') 事件还没有注册上，对应的回调函数会被漏掉。为了解决这个问题，可以将'listening'事件放进nextTick()中变为异步操作，如此一来，当前的脚本可以顺利执行完，事件监听不会被漏掉。
+
+### 去重
+
+在timers和check阶段，Node.js中C和Javascript代码会因为多个immediates和timers而存在单向转换。去重是一种优化手段，但会产生某些副作用，示例代码如下:
+
+```javascript
+    // dedup.js
+    const foo = [1, 2];
+    const bar = ['a', 'b'];
+
+    foo.forEach(num => {
+        setImmediate(() => {
+            console.log('setImmediate', num);
+            bar.forEach(char => {
+            process.nextTick(() => {
+                console.log('process.nextTick', char);
+            });
+            });
+        });
+    });
+```
+
+会输出
+
+```bash
+    $ node dedup.js
+
+    setImmediate 1
+    setImmediate 2
+    process.nextTick a
+    process.nextTick b
+    process.nextTick a
+    process.nextTick b
+```
+
+主线程增加了两个setImmediate()，它们将会分别增加两个process.nextTick()事件。当事件循环进行到check阶段时，将会检查到对应的setImmediate()事件，第一个事件被执行时将会打印出对应的`console.log('setImmediate', num);`内容，并且为`nextTickQueue`增加两个事件。
+
+由于去重，事件循环并不会立刻切换至C/C++层去检查nextTickQueue内容。而是会继续执行其他的setImmediate()事件。当执行完毕时，两个setImmediate事件会增加4个nextTickQueue的事件。
+
+当所有的setImmediate()事件被执行完毕时，`nextTickQueue`将会被检查，其中的事件将会按照FIFO队列顺序执行。当`nextTickQueue`也被执行完毕时，事件循环会认为当前阶段的所有操作已被执行完毕而进入下一个阶段。
+
+### process.nextTick() vs setImmediate()
+
+这两个方法在node中功能差不多，且它们的名字很有迷惑性。
+
+* process.nextTick() 会在每个阶段中被执行。
+* setImmediate() 会在event loop的后续阶段或者说某一特殊阶段中执行
+
+实际上，它们两个的名字应该被交换一下，process.nextTick() 相对于 setImmediate() 更加符合‘立即执行’的描述，但是这是一个历史问题了，交换这两个名字会造成难以预计的后果。
+
+我们建议开发者在所有情况下尽可能使用`setImmediate()`，因为它更容易理解且兼容性更好，比如对于浏览器端。
+
+### 那为什么还有使用process.nextTick()的必要呢？
+
+有两个原因：
+
+1. 允许用户处理错误，清理任何不需要的资源，或者在事件循环进入下一个阶段时重试请求。
+2. 在必要时允许回调在调用栈中的代码执行完毕但事件循环未进入下一阶段时被调用。
+
+举个例子：
+
+```javascript
+const server = net.createServer();
+server.on('connection', (conn) => { });
+
+server.listen(8080);
+server.on('listening', () => { });
+```
+
+在这种情况下，`listen()`会在事件循环开始前执行，如果将listening回调函数放进setImmediate()中。那么在poll阶段将会无法执行监听回调，这意味着存在一定概率在监听之前某些事情就被触发了。
+
+另一个例子，在一个继承EventEmitter的类的构造函数中触发事件:
+
+```javascript
+    const EventEmitter = require('events');
+    const util = require('util');
+
+    function MyEmitter() {
+        EventEmitter.call(this);
+        this.emit('event');
+    }
+    util.inherits(MyEmitter, EventEmitter);
+
+    const myEmitter = new MyEmitter();
+        myEmitter.on('event', () => {
+        console.log('an event occurred!');
+    });
+```
+
+你会发现你不该立即在构造函数中触发这个事件，因为脚本还未执行到添加监听函数部分。所以你可以使用`process.nextTick()`将触发事件部分代码包装起来：
+
+```javascript
+const EventEmitter = require('events');
+const util = require('util');
+
+function MyEmitter() {
+  EventEmitter.call(this);
+
+  // use nextTick to emit the event once a handler is assigned
+  process.nextTick(() => {
+    this.emit('event');
+  });
+}
+util.inherits(MyEmitter, EventEmitter);
+
+const myEmitter = new MyEmitter();
+myEmitter.on('event', () => {
+  console.log('an event occurred!');
+});
+```

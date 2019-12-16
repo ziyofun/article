@@ -1,2 +1,0 @@
-Q: 纯函数、Component、PureComponent有什么区别？
-A: 首先明确一点纯函数组件不会带来任何性能上的提升，仅仅封装了一层class，但是react有可能在未来针对其进行单独优化。纯函数组件也称为无状态组件，它主要的优势在于“架构”层面，由于纯函数的组件表现行为完全由输入参数决定且无任何生命周期的执行，所以纯函数组件更利于代码重用和编写测试以及问题追踪。Component和PureComponent的最大不同在于，前者只要执行shouldComponentUpdate周期函数时就会重新渲染，而PureComponent则会在上次与本次的props和state直接进行一次浅比较，如果相同则不会进入dom diff环节。
